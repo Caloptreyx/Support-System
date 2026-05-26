@@ -73,7 +73,7 @@ export default function TicketConversation({ messages, emptyText = 'No messages 
               radius='xl'
               color={avatarColor(message)}
               variant='light'
-              src={message.authorAvatar || undefined}
+              src={message.authorAvatar ?? '/icon.svg'}
               className='support-ticket-message-avatar'
             >
               {avatarInitials(message)}

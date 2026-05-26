@@ -567,6 +567,8 @@ fn ensure_message_or_attachments(
     Ok(())
 }
 
+const ATTACHMENT_STORAGE_PREFIX: &str = "privatedata/extensions/dev.luxxy.supportsystem";
+
 fn build_attachment_storage_path(
     ticket_uuid: uuid::Uuid,
     message_uuid: uuid::Uuid,
@@ -574,7 +576,7 @@ fn build_attachment_storage_path(
     original_name: &str,
 ) -> String {
     format!(
-        "support/tickets/{ticket_uuid}/messages/{message_uuid}/{attachment_uuid}_{original_name}"
+        "{ATTACHMENT_STORAGE_PREFIX}/tickets/{ticket_uuid}/messages/{message_uuid}/{attachment_uuid}_{original_name}"
     )
 }
 
@@ -586,16 +588,15 @@ async fn load_attachment_bytes_from_storage(
 
     match &settings.storage_driver {
         shared::settings::StorageDriver::Filesystem { .. } => {
-            let base_dir = storage_path.split('/').next().unwrap_or(storage_path);
             let base_filesystem = settings
                 .storage_driver
-                .get_cap_filesystem(base_dir)
+                .get_cap_filesystem(ATTACHMENT_STORAGE_PREFIX)
                 .await
                 .expect("filesystem storage driver must provide a filesystem")?;
             drop(settings);
 
             let relative_path = storage_path
-                .strip_prefix(&format!("{base_dir}/"))
+                .strip_prefix(&format!("{ATTACHMENT_STORAGE_PREFIX}/"))
                 .unwrap_or(storage_path);
 
             let mut file = base_filesystem
@@ -861,12 +862,12 @@ async fn build_ticket_detail(
 ) -> Result<ApiTicketDetail, anyhow::Error> {
     let storage_url_retriever = state.storage.retrieve_urls().await?;
 
-    let row = sqlx::query_as::<_, TicketDetailRow>(&format!(
+    let row = sqlx::query_as::<_, TicketDetailRow>(sqlx::AssertSqlSafe(format!(
         r#"{}
         WHERE t.uuid = $1 AND t.deleted_at IS NULL
         "#,
         DETAIL_SELECT
-    ))
+    )))
     .bind(ticket_uuid)
     .fetch_optional(state.database.read())
     .await?

@@ -220,9 +220,9 @@ mod add_message {
         activity_logger
             .log(
                 if request.is_internal {
-                    "tickets:add_internal_note"
+                    "tickets:message.add-note"
                 } else {
-                    "tickets:reply"
+                    "tickets:message.reply"
                 },
                 serde_json::json!({
                     "ticket_uuid": ticket.ticket.uuid,
@@ -279,9 +279,9 @@ mod add_message_upload {
         activity_logger
             .log(
                 if is_internal {
-                    "tickets:add_internal_note"
+                    "tickets:message.add-note"
                 } else {
-                    "tickets:reply"
+                    "tickets:message.reply"
                 },
                 serde_json::json!({
                     "ticket_uuid": ticket.ticket.uuid,
@@ -329,7 +329,7 @@ mod update_status {
 
         activity_logger
             .log(
-                "tickets:update_status",
+                "tickets:status.update",
                 serde_json::json!({
                     "ticket_uuid": ticket.ticket.uuid,
                     "status": ticket.ticket.status,
@@ -370,7 +370,7 @@ mod assign_ticket {
 
         activity_logger
             .log(
-                "tickets:assign",
+                "tickets:ticket.assign",
                 serde_json::json!({
                     "ticket_uuid": ticket.ticket.uuid,
                     "assigned_user_uuid": ticket.ticket.assigned_user.as_ref().map(|value| value.uuid),
@@ -416,7 +416,7 @@ mod update_priority {
 
         activity_logger
             .log(
-                "tickets:update_priority",
+                "tickets:priority.update",
                 serde_json::json!({
                     "ticket_uuid": ticket.ticket.uuid,
                     "priority": ticket.ticket.priority,
@@ -458,7 +458,7 @@ mod update_category {
 
         activity_logger
             .log(
-                "tickets:update_category",
+                "tickets:ticket.update-category",
                 serde_json::json!({
                     "ticket_uuid": ticket.ticket.uuid,
                     "category_uuid": ticket.ticket.category.as_ref().map(|value| value.uuid),
@@ -494,7 +494,7 @@ mod delete_ticket {
 
         activity_logger
             .log(
-                "tickets:delete",
+                "tickets:ticket.delete",
                 serde_json::json!({
                     "ticket_uuid": ticket_uuid,
                 }),
@@ -569,7 +569,7 @@ mod update_settings {
 
         activity_logger
             .log(
-                "tickets:update_settings",
+                "tickets:settings.update",
                 serde_json::json!({
                     "categories_enabled": settings.settings.categories_enabled,
                     "allow_client_close": settings.settings.allow_client_close,
@@ -628,9 +628,9 @@ mod upsert_category {
         activity_logger
             .log(
                 if request.uuid.is_some() {
-                    "tickets:update_category_definition"
+                    "tickets:category.update"
                 } else {
-                    "tickets:create_category"
+                    "tickets:category.create"
                 },
                 serde_json::json!({
                     "category_uuid": category.uuid,
@@ -666,7 +666,7 @@ mod delete_category {
 
         activity_logger
             .log(
-                "tickets:delete_category",
+                "tickets:category.delete",
                 serde_json::json!({
                     "category_uuid": category_uuid,
                 }),

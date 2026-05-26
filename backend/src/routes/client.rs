@@ -124,7 +124,7 @@ mod create_ticket {
 
         activity_logger
             .log(
-                "tickets:create",
+                "tickets:ticket.create",
                 serde_json::json!({
                     "ticket_uuid": ticket.ticket.uuid,
                     "subject": ticket.ticket.subject,
@@ -176,7 +176,7 @@ mod create_ticket_upload {
 
         activity_logger
             .log(
-                "tickets:create",
+                "tickets:ticket.create",
                 serde_json::json!({
                     "ticket_uuid": ticket.ticket.uuid,
                     "subject": ticket.ticket.subject,
@@ -286,7 +286,7 @@ mod reply_ticket {
 
         activity_logger
             .log(
-                "tickets:reply",
+                "tickets:message.reply",
                 serde_json::json!({
                     "ticket_uuid": ticket.ticket.uuid,
                 }),
@@ -328,7 +328,7 @@ mod reply_ticket_upload {
 
         activity_logger
             .log(
-                "tickets:reply",
+                "tickets:message.reply",
                 serde_json::json!({
                     "ticket_uuid": ticket.ticket.uuid,
                 }),
@@ -375,7 +375,7 @@ mod update_status {
 
         activity_logger
             .log(
-                "tickets:update_status",
+                "tickets:status.update",
                 serde_json::json!({
                     "ticket_uuid": ticket.ticket.uuid,
                     "status": ticket.ticket.status,

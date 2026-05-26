@@ -1,4 +1,4 @@
-import { Group, Select as MantineSelect, Stack, Text, Title } from '@mantine/core';
+import { Group, Select as MantineSelect, Stack, Text } from '@mantine/core';
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { httpErrorToHuman } from '@/api/axios.ts';
@@ -72,13 +72,6 @@ export default function DashboardSupportCreatePage() {
     [bootstrap?.categories],
   );
 
-  const rateLimitDescription =
-    (bootstrap?.settings.createTicketRateLimitHits ?? 0) > 0
-      ? `New ticket creation is limited to ${bootstrap.settings.createTicketRateLimitHits} ticket${
-          bootstrap.settings.createTicketRateLimitHits === 1 ? '' : 's'
-        } every ${bootstrap.settings.createTicketRateLimitWindowSeconds} seconds.`
-      : null;
-
   const openTicketLimitDescription =
     (bootstrap?.settings.maxOpenTicketsPerUser ?? 0) > 0
       ? `You can have up to ${bootstrap.settings.maxOpenTicketsPerUser} open ticket${
@@ -139,13 +132,10 @@ export default function DashboardSupportCreatePage() {
     <AccountContentContainer title='Create Ticket'>
       <Group justify='space-between' align='end' mb='md'>
         <div>
-          <Title order={1} c='white'>
-            Create Ticket
-          </Title>
           <Text c='dimmed'>Create a general support request or attach it to one of your servers.</Text>
-          {(rateLimitDescription || openTicketLimitDescription) && (
+          {openTicketLimitDescription && (
             <Text c='dimmed' size='sm' mt={4}>
-              {[openTicketLimitDescription, rateLimitDescription].filter(Boolean).join(' ')}
+              {openTicketLimitDescription}
             </Text>
           )}
         </div>
