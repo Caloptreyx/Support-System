@@ -21,8 +21,7 @@ tokio = { workspace = true }
 tokio-util = { workspace = true }
 futures-util = { workspace = true }
 
-# Fixed: this is not in the root Calagopus workspace dependencies
-rust-s3 = "0.35"
+aws-sdk-s3 = { workspace = true }
 
 reqwest = { workspace = true }
 utoipa = { workspace = true }

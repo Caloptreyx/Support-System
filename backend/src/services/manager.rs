@@ -628,35 +628,43 @@ async fn load_attachment_bytes_from_storage(
             path_style,
             ..
         } => {
-            let credentials = s3::creds::Credentials::new(
-                Some(access_key.as_str()),
-                Some(secret_key.as_str()),
+            let credentials = aws_sdk_s3::config::Credentials::new(
+                access_key.as_str(),
+                secret_key.as_str(),
                 None,
                 None,
-                None,
-            )?;
-            let mut s3_bucket = s3::Bucket::new(
-                bucket.as_str(),
-                s3::Region::Custom {
-                    region: region.to_string(),
-                    endpoint: endpoint.to_string(),
-                },
-                credentials,
-            )?;
-
-            if *path_style {
-                s3_bucket.set_path_style();
-            }
-
+                "calagopus-static",
+            );
+            let config = aws_sdk_s3::config::Config::builder()
+                .behavior_version(aws_sdk_s3::config::BehaviorVersion::latest())
+                .credentials_provider(credentials)
+                .region(aws_sdk_s3::config::Region::new(region.to_string()))
+                .endpoint_url(endpoint.as_str())
+                .force_path_style(*path_style)
+                .build();
+            let client = aws_sdk_s3::Client::from_conf(config);
+            let bucket = bucket.clone();
             drop(settings);
 
-            let response = s3_bucket.get_object(storage_path).await?;
-            match response.status_code() {
-                200..=299 => Ok(response.into_bytes()),
-                404 => Err(DisplayError::new("attachment not found")
-                    .with_status(axum::http::StatusCode::NOT_FOUND)
-                    .into()),
-                _ => Err(DisplayError::new("failed to read attachment")
+            match client
+                .get_object()
+                .bucket(bucket.as_str())
+                .key(storage_path)
+                .send()
+                .await
+            {
+                Ok(output) => Ok(output.body.collect().await?.into_bytes()),
+                Err(aws_sdk_s3::error::SdkError::ServiceError(err))
+                    if matches!(
+                        err.err(),
+                        aws_sdk_s3::operation::get_object::GetObjectError::NoSuchKey(_)
+                    ) =>
+                {
+                    Err(DisplayError::new("attachment not found")
+                        .with_status(axum::http::StatusCode::NOT_FOUND)
+                        .into())
+                }
+                Err(_) => Err(DisplayError::new("failed to read attachment")
                     .with_status(axum::http::StatusCode::BAD_GATEWAY)
                     .into()),
             }
