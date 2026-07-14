@@ -2,7 +2,7 @@
 name = "dev_luxxy_supportsystem"
 description = "Native Calagopus support ticket system"
 authors = ["Luxxy"]
-version = "1.0.1"
+version = "1.1.0"
 edition = { workspace = true }
 
 [dependencies]
@@ -27,3 +27,5 @@ reqwest = { workspace = true }
 utoipa = { workspace = true }
 utoipa-axum = { workspace = true }
 uuid = { workspace = true }
+semver = { workspace = true }
+compact_str = { workspace = true }

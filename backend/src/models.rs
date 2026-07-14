@@ -89,6 +89,7 @@ impl TicketActorType {
 #[derive(ToSchema, Serialize, Deserialize, Clone)]
 pub struct ApiTicketSettings {
     pub uuid: uuid::Uuid,
+    pub enabled: bool,
     pub categories_enabled: bool,
     pub allow_client_close: bool,
     pub allow_reply_on_closed: bool,
@@ -248,7 +249,6 @@ pub struct AdminTicketSettingsDetailResponse {
 }
 
 #[derive(ToSchema, Serialize, Deserialize, Validate)]
-#[serde(rename_all = "camelCase")]
 pub struct ClientCreateTicketRequest {
     #[garde(skip)]
     #[serde(default)]
@@ -266,21 +266,18 @@ pub struct ClientCreateTicketRequest {
 }
 
 #[derive(ToSchema, Serialize, Deserialize, Validate)]
-#[serde(rename_all = "camelCase")]
 pub struct ClientReplyTicketRequest {
     #[garde(length(chars, min = 1, max = 20000))]
     pub body: String,
 }
 
 #[derive(ToSchema, Serialize, Deserialize, Validate)]
-#[serde(rename_all = "camelCase")]
 pub struct ClientUpdateTicketStatusRequest {
     #[garde(length(chars, min = 1, max = 32))]
     pub status: String,
 }
 
 #[derive(ToSchema, Serialize, Deserialize, Validate)]
-#[serde(rename_all = "camelCase")]
 pub struct AdminTicketMessageRequest {
     #[garde(length(chars, min = 1, max = 20000))]
     pub body: String,
@@ -290,14 +287,12 @@ pub struct AdminTicketMessageRequest {
 }
 
 #[derive(ToSchema, Serialize, Deserialize, Validate)]
-#[serde(rename_all = "camelCase")]
 pub struct AdminUpdateTicketStatusRequest {
     #[garde(length(chars, min = 1, max = 32))]
     pub status: String,
 }
 
 #[derive(ToSchema, Serialize, Deserialize, Validate)]
-#[serde(rename_all = "camelCase")]
 pub struct AdminAssignTicketRequest {
     #[garde(skip)]
     #[serde(default)]
@@ -305,7 +300,6 @@ pub struct AdminAssignTicketRequest {
 }
 
 #[derive(ToSchema, Serialize, Deserialize, Validate)]
-#[serde(rename_all = "camelCase")]
 pub struct AdminUpdateTicketPriorityRequest {
     #[garde(skip)]
     #[serde(default)]
@@ -313,7 +307,6 @@ pub struct AdminUpdateTicketPriorityRequest {
 }
 
 #[derive(ToSchema, Serialize, Deserialize, Validate)]
-#[serde(rename_all = "camelCase")]
 pub struct AdminUpdateTicketCategoryRequest {
     #[garde(skip)]
     #[serde(default)]
@@ -321,8 +314,9 @@ pub struct AdminUpdateTicketCategoryRequest {
 }
 
 #[derive(ToSchema, Serialize, Deserialize, Validate)]
-#[serde(rename_all = "camelCase")]
 pub struct AdminUpdateTicketSettingsRequest {
+    #[garde(skip)]
+    pub enabled: bool,
     #[garde(skip)]
     pub categories_enabled: bool,
     #[garde(skip)]
@@ -357,7 +351,6 @@ pub struct AdminUpdateTicketSettingsRequest {
 }
 
 #[derive(ToSchema, Serialize, Deserialize, Validate)]
-#[serde(rename_all = "camelCase")]
 pub struct AdminUpsertTicketCategoryRequest {
     #[garde(skip)]
     #[serde(default)]

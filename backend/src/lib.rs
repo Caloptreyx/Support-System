@@ -1,7 +1,9 @@
 use indexmap::IndexMap;
 use shared::{
     State,
-    extensions::{Extension, ExtensionPermissionsBuilder, ExtensionRouteBuilder},
+    extensions::{
+        Extension, ExtensionPermissionsBuilder, ExtensionRouteBuilder, ExtensionUpdateInfo,
+    },
     permissions::PermissionGroup,
 };
 
@@ -17,6 +19,14 @@ impl Extension for ExtensionStruct {
     async fn initialize(&mut self, _state: State) {
         services::lifecycle::register_handlers().await;
         tracing::info!("support system extension initialized");
+    }
+
+    async fn check_for_updates(
+        &self,
+        state: State,
+        current_version: &semver::Version,
+    ) -> Result<Option<ExtensionUpdateInfo>, anyhow::Error> {
+        services::update_check::check_for_updates(state, current_version).await
     }
 
     async fn initialize_router(

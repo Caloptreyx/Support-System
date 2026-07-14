@@ -22,6 +22,7 @@ export default function DashboardSupportTicketsPage() {
   const [tickets, setTickets] = useState<Paginated<TicketSummary>>(emptyPaginated());
   const [loadingBootstrap, setLoadingBootstrap] = useState(true);
   const [loadingTickets, setLoadingTickets] = useState(true);
+  const [ticketSystemEnabled, setTicketSystemEnabled] = useState(true);
   const [fatalError, setFatalError] = useState<string | null>(null);
   const [search, setSearch] = useState('');
   const [status, setStatus] = useState<string | null>(null);
@@ -31,8 +32,9 @@ export default function DashboardSupportTicketsPage() {
     let mounted = true;
 
     getClientBootstrap()
-      .then(() => {
+      .then((response) => {
         if (!mounted) return;
+        setTicketSystemEnabled(response.settings.enabled);
       })
       .catch((error) => {
         if (!mounted) return;
@@ -50,6 +52,11 @@ export default function DashboardSupportTicketsPage() {
   }, []);
 
   useEffect(() => {
+    if (loadingBootstrap || !ticketSystemEnabled) {
+      setLoadingTickets(false);
+      return;
+    }
+
     let mounted = true;
     setLoadingTickets(true);
 
@@ -79,7 +86,7 @@ export default function DashboardSupportTicketsPage() {
       mounted = false;
       window.clearTimeout(timer);
     };
-  }, [addToast, page, search, status]);
+  }, [addToast, page, search, status, loadingBootstrap, ticketSystemEnabled]);
 
   if (loadingBootstrap) {
     return (
@@ -93,6 +100,17 @@ export default function DashboardSupportTicketsPage() {
     return (
       <AccountContentContainer title='Support'>
         <ScreenBlock title='Support Unavailable' content={fatalError} />
+      </AccountContentContainer>
+    );
+  }
+
+  if (!ticketSystemEnabled) {
+    return (
+      <AccountContentContainer title='Support'>
+        <ScreenBlock
+          title='Support Temporarily Unavailable'
+          content='The support ticket system is currently disabled. You cannot create new tickets or send replies right now.'
+        />
       </AccountContentContainer>
     );
   }

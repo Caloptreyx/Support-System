@@ -11,6 +11,5 @@ pub async fn register_handlers() {
 
             Ok(())
         })
-    })
-    .await;
+    });
 }

@@ -55,7 +55,7 @@ export default function SupportRichTextEditor({ value, onChange, placeholder, di
 
     const nextValue = value || '<p></p>';
     if (editor.getHTML() !== nextValue) {
-      editor.commands.setContent(nextValue, false);
+      editor.commands.setContent(nextValue, { emitUpdate: false });
     }
   }, [editor, value]);
 

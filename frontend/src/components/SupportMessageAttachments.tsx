@@ -105,7 +105,12 @@ export default function SupportMessageAttachments({ attachments }: Props) {
             </Text>
 
             <ModalFooter>
-              <Button component='a' href={activeAttachment.url} target='_blank' rel='noreferrer' variant='light'>
+              <Button
+                variant='light'
+                onClick={() => {
+                  window.open(activeAttachment.url, '_blank', 'noopener,noreferrer');
+                }}
+              >
                 Open Original
               </Button>
               <Button variant='default' onClick={closeModal}>

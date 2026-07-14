@@ -152,11 +152,16 @@ export default function DashboardSupportTicketPage() {
   const linkedServerPath = detail?.ticket.linkedServer.currentUuidShort
     ? `/server/${detail.ticket.linkedServer.currentUuidShort}`
     : null;
+  const ticketSystemEnabled = bootstrap?.settings.enabled ?? false;
   const canReply =
-    detail && bootstrap ? detail.ticket.status !== 'closed' || bootstrap.settings.allowReplyOnClosed : false;
+    detail && bootstrap
+      ? ticketSystemEnabled && (detail.ticket.status !== 'closed' || bootstrap.settings.allowReplyOnClosed)
+      : false;
   const canClose =
-    detail && bootstrap ? bootstrap.settings.allowClientClose && detail.ticket.status !== 'closed' : false;
-  const canReopen = detail?.ticket.status === 'closed';
+    detail && bootstrap
+      ? ticketSystemEnabled && bootstrap.settings.allowClientClose && detail.ticket.status !== 'closed'
+      : false;
+  const canReopen = ticketSystemEnabled && detail?.ticket.status === 'closed';
 
   const refreshTicket = async (nextTicket: TicketDetail) => {
     setDetail(nextTicket);
@@ -264,7 +269,13 @@ export default function DashboardSupportTicketPage() {
                   <SupportRichTextEditor
                     value={replyBody}
                     disabled={!canReply}
-                    placeholder={canReply ? 'Write your reply...' : 'Replies are disabled for this ticket.'}
+                    placeholder={
+                      canReply
+                        ? 'Write your reply...'
+                        : !ticketSystemEnabled
+                          ? 'Support is temporarily disabled. You cannot send replies right now.'
+                          : 'Replies are disabled for this ticket.'
+                    }
                     onChange={setReplyBody}
                   />
                   <SupportAttachmentPicker

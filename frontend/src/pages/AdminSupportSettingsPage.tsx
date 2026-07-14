@@ -1,4 +1,14 @@
-import { Group, Select as MantineSelect, NumberInput, SimpleGrid, Stack, Switch, Text, Title } from '@mantine/core';
+import {
+  Divider,
+  Group,
+  Select as MantineSelect,
+  NumberInput,
+  SimpleGrid,
+  Stack,
+  Switch,
+  Text,
+  Title,
+} from '@mantine/core';
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { httpErrorToHuman } from '@/api/axios.ts';
@@ -20,6 +30,7 @@ import {
 import type { AdminTicketBootstrap, AdminTicketSettingsDetail } from '../types/index.ts';
 
 const defaultSettingsForm = {
+  enabled: true,
   categoriesEnabled: true,
   allowClientClose: true,
   allowReplyOnClosed: false,
@@ -39,6 +50,7 @@ const defaultSettingsForm = {
 
 function buildSettingsForm(bootstrap: AdminTicketBootstrap, detail: AdminTicketSettingsDetail | null) {
   return {
+    enabled: bootstrap.settings.enabled,
     categoriesEnabled: bootstrap.settings.categoriesEnabled,
     allowClientClose: bootstrap.settings.allowClientClose,
     allowReplyOnClosed: bootstrap.settings.allowReplyOnClosed,
@@ -143,6 +155,7 @@ export default function AdminSupportSettingsPage() {
     setBootstrap(response);
     setSettingsForm((current) => ({
       ...current,
+      enabled: response.settings.enabled,
       categoriesEnabled: response.settings.categoriesEnabled,
       allowClientClose: response.settings.allowClientClose,
       allowReplyOnClosed: response.settings.allowReplyOnClosed,
@@ -159,6 +172,7 @@ export default function AdminSupportSettingsPage() {
       setBootstrap((current) => (current ? { ...current, settings: settings.settings } : current));
       setSettingsForm((current) => ({
         ...current,
+        enabled: settings.settings.enabled,
         categoriesEnabled: settings.settings.categoriesEnabled,
         allowClientClose: settings.settings.allowClientClose,
         allowReplyOnClosed: settings.settings.allowReplyOnClosed,
@@ -274,6 +288,14 @@ export default function AdminSupportSettingsPage() {
           <SimpleGrid cols={{ base: 1, md: 2, xl: 4 }} mt='sm'>
             <div>
               <Text size='xs' c='dimmed'>
+                System Status
+              </Text>
+              <Text fw={600} c={bootstrap.settings.enabled ? undefined : 'red'}>
+                {bootstrap.settings.enabled ? 'Enabled' : 'Disabled'}
+              </Text>
+            </div>
+            <div>
+              <Text size='xs' c='dimmed'>
                 Categories
               </Text>
               <Text fw={600}>{bootstrap.categories.length}</Text>
@@ -321,6 +343,19 @@ export default function AdminSupportSettingsPage() {
                     Ticket Settings
                   </Text>
                   <Stack gap='sm'>
+                    <Switch
+                      label='Enable support ticket system'
+                      description='When disabled, clients cannot create new tickets or reply to existing ones. Staff can still manage open tickets.'
+                      color='red'
+                      checked={settingsForm.enabled}
+                      onChange={(event) =>
+                        setSettingsForm((current) => ({
+                          ...current,
+                          enabled: event.currentTarget.checked,
+                        }))
+                      }
+                    />
+                    <Divider />
                     <Switch
                       label='Enable categories for clients'
                       checked={settingsForm.categoriesEnabled}

@@ -7,6 +7,7 @@ export interface Paginated<T> {
 
 export interface TicketSettings {
   uuid: string;
+  enabled: boolean;
   categoriesEnabled: boolean;
   allowClientClose: boolean;
   allowReplyOnClosed: boolean;

@@ -247,7 +247,7 @@ export default function AdminSupportTicketPage() {
       syncDetail(nextTicket, { preserveMessageBody: true });
       addToast('Ticket status updated.', 'success');
     } catch (error) {
-      setStatusValue(detail.ticket.status);
+      setStatusValue(detail?.ticket.status ?? null);
       addToast(httpErrorToHuman(error), 'error');
     } finally {
       setSavingControl(null);
@@ -266,7 +266,7 @@ export default function AdminSupportTicketPage() {
       syncDetail(nextTicket, { preserveMessageBody: true });
       addToast('Ticket priority updated.', 'success');
     } catch (error) {
-      setPriorityValue(detail.ticket.priority);
+      setPriorityValue(detail?.ticket.priority ?? null);
       addToast(httpErrorToHuman(error), 'error');
     } finally {
       setSavingControl(null);
@@ -285,7 +285,7 @@ export default function AdminSupportTicketPage() {
       syncDetail(nextTicket, { preserveMessageBody: true });
       addToast('Ticket category updated.', 'success');
     } catch (error) {
-      setCategoryValue(detail.ticket.category?.uuid ?? null);
+      setCategoryValue(detail?.ticket.category?.uuid ?? null);
       addToast(httpErrorToHuman(error), 'error');
     } finally {
       setSavingControl(null);
@@ -304,7 +304,7 @@ export default function AdminSupportTicketPage() {
       syncDetail(nextTicket, { preserveMessageBody: true });
       addToast('Ticket assignment updated.', 'success');
     } catch (error) {
-      setAssigneeValue(detail.ticket.assignedUser?.uuid ?? null);
+      setAssigneeValue(detail?.ticket.assignedUser?.uuid ?? null);
       addToast(httpErrorToHuman(error), 'error');
     } finally {
       setSavingControl(null);

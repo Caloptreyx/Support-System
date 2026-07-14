@@ -29,6 +29,7 @@ use tracing::warn;
 #[derive(Clone, FromRow)]
 struct TicketSettingsRow {
     uuid: uuid::Uuid,
+    enabled: bool,
     categories_enabled: bool,
     allow_client_close: bool,
     allow_reply_on_closed: bool,
@@ -299,6 +300,7 @@ const DETAIL_SELECT: &str = r#"
 fn to_settings_api(row: TicketSettingsRow) -> ApiTicketSettings {
     ApiTicketSettings {
         uuid: row.uuid,
+        enabled: row.enabled,
         categories_enabled: row.categories_enabled,
         allow_client_close: row.allow_client_close,
         allow_reply_on_closed: row.allow_reply_on_closed,
@@ -773,6 +775,7 @@ async fn get_or_create_settings_row(state: &State) -> Result<TicketSettingsRow, 
         r#"
         SELECT
             uuid,
+            enabled,
             categories_enabled,
             allow_client_close,
             allow_reply_on_closed,
@@ -822,6 +825,7 @@ async fn get_or_create_settings_row(state: &State) -> Result<TicketSettingsRow, 
         VALUES (TRUE, TRUE, FALSE, 20, 300, 0, FALSE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, FALSE)
         RETURNING
             uuid,
+            enabled,
             categories_enabled,
             allow_client_close,
             allow_reply_on_closed,
@@ -1395,6 +1399,7 @@ pub async fn delete_category(
 
 pub async fn update_settings(
     state: &State,
+    enabled: bool,
     categories_enabled: bool,
     allow_client_close: bool,
     allow_reply_on_closed: bool,
@@ -1439,10 +1444,12 @@ pub async fn update_settings(
             discord_notify_on_status_change = $14,
             discord_notify_on_assignment_change = $15,
             discord_notify_on_ticket_deleted = $16,
+            enabled = $17,
             updated = NOW()
         WHERE uuid = $1
         RETURNING
             uuid,
+            enabled,
             categories_enabled,
             allow_client_close,
             allow_reply_on_closed,
@@ -1478,6 +1485,7 @@ pub async fn update_settings(
     .bind(discord_notify_on_status_change)
     .bind(discord_notify_on_assignment_change)
     .bind(discord_notify_on_ticket_deleted)
+    .bind(enabled)
     .fetch_one(state.database.write())
     .await?;
 
@@ -1636,6 +1644,14 @@ pub async fn create_ticket(
     attachments: Vec<IncomingAttachmentUpload>,
 ) -> Result<ApiTicketDetail, anyhow::Error> {
     let settings = get_or_create_settings_row(state).await?;
+
+    if !settings.enabled {
+        return Err(
+            DisplayError::new("the support ticket system is currently disabled")
+                .with_status(StatusCode::FORBIDDEN)
+                .into(),
+        );
+    }
 
     if settings.create_ticket_rate_limit_hits > 0 {
         if state
@@ -1934,6 +1950,15 @@ pub async fn add_client_reply(
     attachments: Vec<IncomingAttachmentUpload>,
 ) -> Result<ApiTicketDetail, anyhow::Error> {
     let settings = get_or_create_settings_row(state).await?;
+
+    if !settings.enabled {
+        return Err(
+            DisplayError::new("the support ticket system is currently disabled")
+                .with_status(StatusCode::FORBIDDEN)
+                .into(),
+        );
+    }
+
     let detail = get_client_ticket_detail(state, user, ticket_uuid).await?;
 
     if detail.ticket.status == TicketStatus::Closed.as_str() && !settings.allow_reply_on_closed {

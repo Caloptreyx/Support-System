@@ -549,6 +549,7 @@ mod update_settings {
 
         let settings = manager::update_settings(
             &state,
+            request.enabled,
             request.categories_enabled,
             request.allow_client_close,
             request.allow_reply_on_closed,
@@ -571,6 +572,7 @@ mod update_settings {
             .log(
                 "tickets:settings.update",
                 serde_json::json!({
+                    "enabled": settings.settings.enabled,
                     "categories_enabled": settings.settings.categories_enabled,
                     "allow_client_close": settings.settings.allow_client_close,
                     "allow_reply_on_closed": settings.settings.allow_reply_on_closed,

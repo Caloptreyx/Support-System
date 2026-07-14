@@ -72,11 +72,10 @@ export default function DashboardSupportCreatePage() {
     [bootstrap?.categories],
   );
 
+  const maxOpenTicketsPerUser = bootstrap?.settings.maxOpenTicketsPerUser ?? 0;
   const openTicketLimitDescription =
-    (bootstrap?.settings.maxOpenTicketsPerUser ?? 0) > 0
-      ? `You can have up to ${bootstrap.settings.maxOpenTicketsPerUser} open ticket${
-          bootstrap.settings.maxOpenTicketsPerUser === 1 ? '' : 's'
-        } at a time.`
+    maxOpenTicketsPerUser > 0
+      ? `You can have up to ${maxOpenTicketsPerUser} open ticket${maxOpenTicketsPerUser === 1 ? '' : 's'} at a time.`
       : null;
 
   const handleSubmit = async () => {
@@ -124,6 +123,17 @@ export default function DashboardSupportCreatePage() {
     return (
       <AccountContentContainer title='Create Ticket'>
         <ScreenBlock title='Support Unavailable' content={fatalError ?? 'Unable to load support settings.'} />
+      </AccountContentContainer>
+    );
+  }
+
+  if (!bootstrap.settings.enabled) {
+    return (
+      <AccountContentContainer title='Create Ticket'>
+        <ScreenBlock
+          title='Support Temporarily Unavailable'
+          content='The support ticket system is currently disabled. You cannot create new tickets right now.'
+        />
       </AccountContentContainer>
     );
   }
