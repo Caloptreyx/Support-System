@@ -545,6 +545,7 @@ fn to_client_server_option(server: Server) -> ApiTicketServerOption {
             shared::models::server::ServerStatus::Installing => "installing".to_string(),
             shared::models::server::ServerStatus::InstallFailed => "install_failed".to_string(),
             shared::models::server::ServerStatus::RestoringBackup => "restoring_backup".to_string(),
+            shared::models::server::ServerStatus::BackupRestoreFailed => "backup_restore_failed".to_string(),
         }),
     }
 }
@@ -1196,6 +1197,7 @@ fn server_snapshot_metadata(server: &Server) -> serde_json::Value {
             shared::models::server::ServerStatus::Installing => "installing".to_string(),
             shared::models::server::ServerStatus::InstallFailed => "install_failed".to_string(),
             shared::models::server::ServerStatus::RestoringBackup => "restoring_backup".to_string(),
+            shared::models::server::ServerStatus::BackupRestoreFailed => "backup_restore_failed".to_string(),
         })).unwrap_or(serde_json::Value::Null),
         "isSuspended": server.suspended,
         "owner": {
