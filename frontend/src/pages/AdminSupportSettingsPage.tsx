@@ -343,49 +343,61 @@ export default function AdminSupportSettingsPage() {
                     Ticket Settings
                   </Text>
                   <Stack gap='sm'>
-                    <Switch
-                      label='Enable support ticket system'
-                      description='When disabled, clients cannot create new tickets or reply to existing ones. Staff can still manage open tickets.'
-                      color='red'
-                      checked={settingsForm.enabled}
-                      onChange={(event) =>
-                        setSettingsForm((current) => ({
-                          ...current,
-                          enabled: event.currentTarget.checked,
-                        }))
-                      }
-                    />
-                    <Divider />
-                    <Switch
-                      label='Enable categories for clients'
-                      checked={settingsForm.categoriesEnabled}
-                      onChange={(event) =>
-                        setSettingsForm((current) => ({
-                          ...current,
-                          categoriesEnabled: event.currentTarget.checked,
-                        }))
-                      }
-                    />
-                    <Switch
-                      label='Allow clients to close tickets'
-                      checked={settingsForm.allowClientClose}
-                      onChange={(event) =>
-                        setSettingsForm((current) => ({
-                          ...current,
-                          allowClientClose: event.currentTarget.checked,
-                        }))
-                      }
-                    />
-                    <Switch
-                      label='Allow replies on closed tickets'
-                      checked={settingsForm.allowReplyOnClosed}
-                      onChange={(event) =>
-                        setSettingsForm((current) => ({
-                          ...current,
-                          allowReplyOnClosed: event.currentTarget.checked,
-                        }))
-                      }
-                    />
+                      <Switch
+                        label='Enable support ticket system'
+                        description='When disabled, clients cannot create new tickets or reply to existing ones. Staff can still manage open tickets.'
+                        color='red'
+                        checked={settingsForm.enabled}
+                        onChange={(event) => {
+                          const checked = event.currentTarget.checked;
+
+                          setSettingsForm((current) => ({
+                            ...current,
+                            enabled: checked,
+                          }));
+                        }}
+                      />
+
+                      <Divider />
+
+                      <Switch
+                        label='Enable categories for clients'
+                        checked={settingsForm.categoriesEnabled}
+                        onChange={(event) => {
+                          const checked = event.currentTarget.checked;
+
+                          setSettingsForm((current) => ({
+                            ...current,
+                            categoriesEnabled: checked,
+                          }));
+                        }}
+                      />
+
+                      <Switch
+                        label='Allow clients to close tickets'
+                        checked={settingsForm.allowClientClose}
+                        onChange={(event) => {
+                          const checked = event.currentTarget.checked;
+
+                          setSettingsForm((current) => ({
+                            ...current,
+                            allowClientClose: checked,
+                          }));
+                        }}
+                      />
+
+                      <Switch
+                        label='Allow replies on closed tickets'
+                        checked={settingsForm.allowReplyOnClosed}
+                        onChange={(event) => {
+                          const checked = event.currentTarget.checked;
+
+                          setSettingsForm((current) => ({
+                            ...current,
+                            allowReplyOnClosed: checked,
+                          }));
+                        }}
+                      />
                     <NumberInput
                       label='Create Ticket Rate Limit Hits'
                       description='How many new tickets a user can open per rate limit window. Set to 0 to disable this limiter.'
@@ -438,12 +450,14 @@ export default function AdminSupportSettingsPage() {
                     <Switch
                       label='Enable Discord webhook notifications'
                       checked={settingsForm.discordWebhookEnabled}
-                      onChange={(event) =>
-                        setSettingsForm((current) => ({
-                          ...current,
-                          discordWebhookEnabled: event?.currentTarget?.checked ?? !current.discordWebhookEnabled,
-                        }))
-                      }
+                        onChange={(event) => {
+                          const checked = event.currentTarget.checked;
+
+                          setSettingsForm((current) => ({
+                            ...current,
+                            discordWebhookEnabled: checked,
+                          }));
+                        }}
                     />
 
                     <TextInput
@@ -459,66 +473,96 @@ export default function AdminSupportSettingsPage() {
                     />
 
                     <SimpleGrid cols={{ base: 1, md: 2 }}>
-                      <Switch
-                        label='Notify on new ticket'
-                        checked={settingsForm.discordNotifyOnTicketCreated}
-                        onChange={(event) =>
-                          setSettingsForm((current) => ({
-                            ...current,
-                            discordNotifyOnTicketCreated: event.currentTarget.checked,
-                          }))
-                        }
-                      />
-                      <Switch
-                        label='Notify on client reply'
-                        checked={settingsForm.discordNotifyOnClientReply}
-                        onChange={(event) =>
-                          setSettingsForm((current) => ({
-                            ...current,
-                            discordNotifyOnClientReply: event.currentTarget.checked,
-                          }))
-                        }
-                      />
-                      <Switch
-                        label='Notify on staff reply'
-                        checked={settingsForm.discordNotifyOnStaffReply}
-                        onChange={(event) =>
-                          setSettingsForm((current) => ({
-                            ...current,
-                            discordNotifyOnStaffReply: event.currentTarget.checked,
-                          }))
-                        }
-                      />
-                      <Switch
-                        label='Notify on internal note'
-                        checked={settingsForm.discordNotifyOnInternalNote}
-                        onChange={(event) =>
-                          setSettingsForm((current) => ({
-                            ...current,
-                            discordNotifyOnInternalNote: event.currentTarget.checked,
-                          }))
-                        }
-                      />
-                      <Switch
-                        label='Notify on status change'
-                        checked={settingsForm.discordNotifyOnStatusChange}
-                        onChange={(event) =>
-                          setSettingsForm((current) => ({
-                            ...current,
-                            discordNotifyOnStatusChange: event.currentTarget.checked,
-                          }))
-                        }
-                      />
-                      <Switch
-                        label='Notify on assignment change'
-                        checked={settingsForm.discordNotifyOnAssignmentChange}
-                        onChange={(event) =>
-                          setSettingsForm((current) => ({
-                            ...current,
-                            discordNotifyOnAssignmentChange: event.currentTarget.checked,
-                          }))
-                        }
-                      />
+                        <Switch
+                          label='Notify on new ticket'
+                          checked={settingsForm.discordNotifyOnTicketCreated}
+                          onChange={(event) => {
+                            const checked = event.currentTarget.checked;
+
+                            setSettingsForm((current) => ({
+                              ...current,
+                              discordNotifyOnTicketCreated: checked,
+                            }));
+                          }}
+                        />
+
+                        <Switch
+                          label='Notify on client reply'
+                          checked={settingsForm.discordNotifyOnClientReply}
+                          onChange={(event) => {
+                            const checked = event.currentTarget.checked;
+
+                            setSettingsForm((current) => ({
+                              ...current,
+                              discordNotifyOnClientReply: checked,
+                            }));
+                          }}
+                        />
+
+                        <Switch
+                          label='Notify on staff reply'
+                          checked={settingsForm.discordNotifyOnStaffReply}
+                          onChange={(event) => {
+                            const checked = event.currentTarget.checked;
+
+                            setSettingsForm((current) => ({
+                              ...current,
+                              discordNotifyOnStaffReply: checked,
+                            }));
+                          }}
+                        />
+
+                        <Switch
+                          label='Notify on internal note'
+                          checked={settingsForm.discordNotifyOnInternalNote}
+                          onChange={(event) => {
+                            const checked = event.currentTarget.checked;
+
+                            setSettingsForm((current) => ({
+                              ...current,
+                              discordNotifyOnInternalNote: checked,
+                            }));
+                          }}
+                        />
+
+                        <Switch
+                          label='Notify on status change'
+                          checked={settingsForm.discordNotifyOnStatusChange}
+                          onChange={(event) => {
+                            const checked = event.currentTarget.checked;
+
+                            setSettingsForm((current) => ({
+                              ...current,
+                              discordNotifyOnStatusChange: checked,
+                            }));
+                          }}
+                        />
+
+                        <Switch
+                          label='Notify on assignment change'
+                          checked={settingsForm.discordNotifyOnAssignmentChange}
+                          onChange={(event) => {
+                            const checked = event.currentTarget.checked;
+
+                            setSettingsForm((current) => ({
+                              ...current,
+                              discordNotifyOnAssignmentChange: checked,
+                            }));
+                          }}
+                        />
+
+                        <Switch
+                          label='Notify on ticket deletion'
+                          checked={settingsForm.discordNotifyOnTicketDeleted}
+                          onChange={(event) => {
+                            const checked = event.currentTarget.checked;
+
+                            setSettingsForm((current) => ({
+                              ...current,
+                              discordNotifyOnTicketDeleted: checked,
+                            }));
+                          }}
+                        />
                     </SimpleGrid>
 
                     <Switch
@@ -594,13 +638,18 @@ export default function AdminSupportSettingsPage() {
                     }
                   />
 
-                  <Switch
-                    label='Enabled'
-                    checked={categoryForm.enabled}
-                    onChange={(event) =>
-                      setCategoryForm((current) => ({ ...current, enabled: event.currentTarget.checked }))
-                    }
-                  />
+                    <Switch
+                      label='Enabled'
+                      checked={categoryForm.enabled}
+                      onChange={(event) => {
+                        const checked = event.currentTarget.checked;
+
+                        setCategoryForm((current) => ({
+                          ...current,
+                          enabled: checked,
+                        }));
+                      }}
+                    />
 
                   <Group justify='space-between'>
                     <Button
