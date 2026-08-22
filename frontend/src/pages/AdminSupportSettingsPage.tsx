@@ -487,19 +487,6 @@ export default function AdminSupportSettingsPage() {
                         />
 
                         <Switch
-                          label='Notify on client reply'
-                          checked={settingsForm.discordNotifyOnClientReply}
-                          onChange={(event) => {
-                            const checked = event.currentTarget.checked;
-
-                            setSettingsForm((current) => ({
-                              ...current,
-                              discordNotifyOnClientReply: checked,
-                            }));
-                          }}
-                        />
-
-                        <Switch
                           label='Notify on staff reply'
                           checked={settingsForm.discordNotifyOnStaffReply}
                           onChange={(event) => {
