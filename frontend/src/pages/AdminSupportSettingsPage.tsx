@@ -441,7 +441,7 @@ export default function AdminSupportSettingsPage() {
                       onChange={(event) =>
                         setSettingsForm((current) => ({
                           ...current,
-                          discordWebhookEnabled: event.currentTarget.checked,
+                          discordWebhookEnabled: event?.currentTarget?.checked ?? !current.discordWebhookEnabled,
                         }))
                       }
                     />
