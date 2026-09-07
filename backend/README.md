@@ -2,6 +2,8 @@
 
 Calagopus support ticket extension for client-to-staff support workflows.
 
+## NOW SUPPORTING 1.2.0 :D
+
 ## Features
 
 - Client support ticket creation from the panel

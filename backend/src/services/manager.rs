@@ -1788,7 +1788,7 @@ pub async fn create_ticket(
     let actor = TicketActor {
         user_uuid: Some(user.uuid),
         username: user.username.as_str(),
-        display_name: format!("{} {}", user.name_first, user.name_last)
+        display_name: format!("{} {}", user.name_first.as_deref().unwrap_or(""), user.name_last.as_deref().unwrap_or(""))
             .trim()
             .to_string(),
         actor_type: TicketActorType::Client,
@@ -1972,7 +1972,7 @@ pub async fn add_client_reply(
     let actor = TicketActor {
         user_uuid: Some(user.uuid),
         username: user.username.as_str(),
-        display_name: format!("{} {}", user.name_first, user.name_last)
+        display_name: format!("{} {}", user.name_first.as_deref().unwrap_or(""), user.name_last.as_deref().unwrap_or(""))
             .trim()
             .to_string(),
         actor_type: TicketActorType::Client,
@@ -2052,7 +2052,7 @@ pub async fn update_client_ticket_status(
     let actor = TicketActor {
         user_uuid: Some(user.uuid),
         username: user.username.as_str(),
-        display_name: format!("{} {}", user.name_first, user.name_last)
+        display_name: format!("{} {}", user.name_first.as_deref().unwrap_or(""), user.name_last.as_deref().unwrap_or(""))
             .trim()
             .to_string(),
         actor_type: TicketActorType::Client,
@@ -2155,7 +2155,7 @@ pub async fn add_admin_message(
     let actor = TicketActor {
         user_uuid: Some(user.uuid),
         username: user.username.as_str(),
-        display_name: format!("{} {}", user.name_first, user.name_last)
+        display_name: format!("{} {}", user.name_first.as_deref().unwrap_or(""), user.name_last.as_deref().unwrap_or(""))
             .trim()
             .to_string(),
         actor_type: TicketActorType::Staff,
@@ -2268,7 +2268,7 @@ pub async fn update_admin_ticket_status(
     let actor = TicketActor {
         user_uuid: Some(user.uuid),
         username: user.username.as_str(),
-        display_name: format!("{} {}", user.name_first, user.name_last)
+        display_name: format!("{} {}", user.name_first.as_deref().unwrap_or(""), user.name_last.as_deref().unwrap_or(""))
             .trim()
             .to_string(),
         actor_type: TicketActorType::Staff,
@@ -2350,7 +2350,7 @@ pub async fn assign_ticket(
     let actor = TicketActor {
         user_uuid: Some(user.uuid),
         username: user.username.as_str(),
-        display_name: format!("{} {}", user.name_first, user.name_last)
+        display_name: format!("{} {}", user.name_first.as_deref().unwrap_or(""), user.name_last.as_deref().unwrap_or(""))
             .trim()
             .to_string(),
         actor_type: TicketActorType::Staff,
@@ -2430,7 +2430,7 @@ pub async fn update_ticket_priority(
     let actor = TicketActor {
         user_uuid: Some(user.uuid),
         username: user.username.as_str(),
-        display_name: format!("{} {}", user.name_first, user.name_last)
+        display_name: format!("{} {}", user.name_first.as_deref().unwrap_or(""), user.name_last.as_deref().unwrap_or(""))
             .trim()
             .to_string(),
         actor_type: TicketActorType::Staff,
@@ -2481,7 +2481,7 @@ pub async fn update_ticket_category(
     let actor = TicketActor {
         user_uuid: Some(user.uuid),
         username: user.username.as_str(),
-        display_name: format!("{} {}", user.name_first, user.name_last)
+        display_name: format!("{} {}", user.name_first.as_deref().unwrap_or(""), user.name_last.as_deref().unwrap_or(""))
             .trim()
             .to_string(),
         actor_type: TicketActorType::Staff,
@@ -2524,7 +2524,7 @@ pub async fn soft_delete_ticket(
     let actor = TicketActor {
         user_uuid: Some(user.uuid),
         username: user.username.as_str(),
-        display_name: format!("{} {}", user.name_first, user.name_last)
+        display_name: format!("{} {}", user.name_first.as_deref().unwrap_or(""), user.name_last.as_deref().unwrap_or(""))
             .trim()
             .to_string(),
         actor_type: TicketActorType::Staff,
