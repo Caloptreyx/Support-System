@@ -2,7 +2,7 @@
 name = "dev_luxxy_supportsystem"
 description = "Native Calagopus support ticket system"
 authors = ["Luxxy"]
-version = "1.1.0"
+version = "1.2.0"
 edition = { workspace = true }
 
 [dependencies]
