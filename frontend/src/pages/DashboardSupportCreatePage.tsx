@@ -9,12 +9,12 @@ import TextInput from '@/elements/input/TextInput.tsx';
 import ScreenBlock from '@/elements/ScreenBlock.tsx';
 import Spinner from '@/elements/Spinner.tsx';
 import { useToast } from '@/providers/ToastProvider.tsx';
+import type { ClientTicketBootstrap } from '../types/index.ts';
 import { createClientTicket, createClientTicketUpload, getClientBootstrap } from '../api/client.ts';
 import SupportAttachmentPicker from '../components/SupportAttachmentPicker.tsx';
 import SupportRichTextEditor from '../components/SupportRichTextEditor.tsx';
 import { isRichTextEmpty } from '../helpers/richText.ts';
 import { buildServerOptionLabel } from '../helpers/tickets.ts';
-import type { ClientTicketBootstrap } from '../types/index.ts';
 
 export default function DashboardSupportCreatePage() {
   const navigate = useNavigate();

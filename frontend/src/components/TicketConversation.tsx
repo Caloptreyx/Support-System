@@ -1,8 +1,8 @@
 import { Avatar, Group, Stack, Text } from '@mantine/core';
 import Badge from '@/elements/Badge.tsx';
 import Card from '@/elements/Card.tsx';
-import { formatTicketDateTime, humanizeTicketActor } from '../helpers/tickets.ts';
 import type { TicketMessage } from '../types/index.ts';
+import { formatTicketDateTime, humanizeTicketActor } from '../helpers/tickets.ts';
 import SupportMessageAttachments from './SupportMessageAttachments.tsx';
 import SupportRichTextContent from './SupportRichTextContent.tsx';
 

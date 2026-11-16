@@ -1,5 +1,5 @@
-import { faLifeRing } from '@fortawesome/free-solid-svg-icons';
 import type { FC } from 'react';
+import { faLifeRing } from '@fortawesome/free-solid-svg-icons';
 import { Extension, ExtensionContext } from 'shared';
 import '@mantine/tiptap/styles.css';
 import AdminSupportSettingsPage from './pages/AdminSupportSettingsPage.tsx';

@@ -11,6 +11,7 @@ import Spinner from '@/elements/Spinner.tsx';
 import Table, { TableData, TableRow } from '@/elements/Table.tsx';
 import { useAdminCan } from '@/plugins/usePermissions.ts';
 import { useToast } from '@/providers/ToastProvider.tsx';
+import type { AdminTicketBootstrap, Paginated, TicketSummary } from '../types/index.ts';
 import { getAdminBootstrap, getAdminTickets } from '../api/client.ts';
 import TicketPriorityBadge from '../components/TicketPriorityBadge.tsx';
 import TicketStatusBadge from '../components/TicketStatusBadge.tsx';
@@ -22,7 +23,6 @@ import {
   ticketPriorityOptions,
   ticketStatusOptions,
 } from '../helpers/tickets.ts';
-import type { AdminTicketBootstrap, Paginated, TicketSummary } from '../types/index.ts';
 
 export default function AdminSupportTicketsPage() {
   const navigate = useNavigate();

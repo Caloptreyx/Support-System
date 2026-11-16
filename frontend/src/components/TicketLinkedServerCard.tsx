@@ -1,7 +1,7 @@
 import { Stack, Text } from '@mantine/core';
 import Card from '@/elements/Card.tsx';
-import { describeLinkedServer, humanizeTicketStatus } from '../helpers/tickets.ts';
 import type { TicketLinkedServer } from '../types/index.ts';
+import { describeLinkedServer, humanizeTicketStatus } from '../helpers/tickets.ts';
 
 export default function TicketLinkedServerCard({
   linkedServer,

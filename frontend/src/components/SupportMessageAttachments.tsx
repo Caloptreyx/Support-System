@@ -3,8 +3,8 @@ import { useMemo, useState } from 'react';
 import Button from '@/elements/Button.tsx';
 import { Modal, ModalFooter } from '@/elements/modals/Modal.tsx';
 import { bytesToString } from '@/lib/size.ts';
-import { isImageAttachment, isVideoAttachment } from '../helpers/attachments.ts';
 import type { TicketAttachment } from '../types/index.ts';
+import { isImageAttachment, isVideoAttachment } from '../helpers/attachments.ts';
 
 interface Props {
   attachments: TicketAttachment[];
@@ -44,7 +44,11 @@ export default function SupportMessageAttachments({ attachments }: Props) {
           >
             <div className='support-ticket-attachment-preview'>
               {isImageAttachment(attachment) ? (
-                <img src={attachment.url} alt={attachment.originalName} className='support-ticket-attachment-preview-media' />
+                <img
+                  src={attachment.url}
+                  alt={attachment.originalName}
+                  className='support-ticket-attachment-preview-media'
+                />
               ) : isVideoAttachment(attachment) ? (
                 <video
                   src={attachment.url}

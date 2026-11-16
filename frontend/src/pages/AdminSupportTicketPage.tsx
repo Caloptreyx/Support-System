@@ -10,6 +10,7 @@ import ScreenBlock from '@/elements/ScreenBlock.tsx';
 import Spinner from '@/elements/Spinner.tsx';
 import { useAdminCan } from '@/plugins/usePermissions.ts';
 import { useToast } from '@/providers/ToastProvider.tsx';
+import type { AdminTicketBootstrap, TicketDetail } from '../types/index.ts';
 import {
   addAdminMessage,
   addAdminMessageUpload,
@@ -37,7 +38,6 @@ import {
   ticketPriorityOptions,
   ticketStatusOptions,
 } from '../helpers/tickets.ts';
-import type { AdminTicketBootstrap, TicketDetail } from '../types/index.ts';
 
 function SidebarDetailRow({ label, value }: { label: string; value: ReactNode }) {
   return (

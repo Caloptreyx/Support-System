@@ -1,5 +1,14 @@
 import { axiosInstance } from '@/api/axios.ts';
 import { parseFromApi, parsePaginationFromApi, serializeForApi } from '@/lib/api-transform.ts';
+import type {
+  AdminTicketBootstrap,
+  AdminTicketSettingsDetail,
+  ClientTicketBootstrap,
+  Paginated,
+  TicketCategory,
+  TicketDetail,
+  TicketSummary,
+} from '../types/index.ts';
 import {
   adminAssignTicketRequestSchema,
   adminTicketBootstrapSchema,
@@ -18,15 +27,6 @@ import {
   ticketDetailSchema,
   ticketSummarySchema,
 } from '../schemas/index.ts';
-import type {
-  AdminTicketBootstrap,
-  AdminTicketSettingsDetail,
-  ClientTicketBootstrap,
-  Paginated,
-  TicketCategory,
-  TicketDetail,
-  TicketSummary,
-} from '../types/index.ts';
 
 export interface ClientTicketListParams {
   page: number;

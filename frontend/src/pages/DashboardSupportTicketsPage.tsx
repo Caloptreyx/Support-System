@@ -1,4 +1,4 @@
-import { Group, Select as MantineSelect, Stack, Text, Title } from '@mantine/core';
+import { Group, Select as MantineSelect, Stack, Text } from '@mantine/core';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { httpErrorToHuman } from '@/api/axios.ts';
@@ -9,11 +9,11 @@ import ScreenBlock from '@/elements/ScreenBlock.tsx';
 import Spinner from '@/elements/Spinner.tsx';
 import Table, { TableData, TableRow } from '@/elements/Table.tsx';
 import { useToast } from '@/providers/ToastProvider.tsx';
+import type { Paginated, TicketSummary } from '../types/index.ts';
 import { getClientBootstrap, getClientTickets } from '../api/client.ts';
 import TicketPriorityBadge from '../components/TicketPriorityBadge.tsx';
 import TicketStatusBadge from '../components/TicketStatusBadge.tsx';
 import { describeLinkedServer, emptyPaginated, formatTicketDateTime, ticketStatusOptions } from '../helpers/tickets.ts';
-import type { Paginated, TicketSummary } from '../types/index.ts';
 
 export default function DashboardSupportTicketsPage() {
   const navigate = useNavigate();

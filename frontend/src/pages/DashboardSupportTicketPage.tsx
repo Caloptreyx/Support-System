@@ -8,6 +8,7 @@ import AccountContentContainer from '@/elements/containers/AccountContentContain
 import ScreenBlock from '@/elements/ScreenBlock.tsx';
 import Spinner from '@/elements/Spinner.tsx';
 import { useToast } from '@/providers/ToastProvider.tsx';
+import type { ClientTicketBootstrap, TicketDetail } from '../types/index.ts';
 import {
   addClientReply,
   addClientReplyUpload,
@@ -28,7 +29,6 @@ import {
   humanizeTicketActor,
   humanizeTicketStatus,
 } from '../helpers/tickets.ts';
-import type { ClientTicketBootstrap, TicketDetail } from '../types/index.ts';
 
 function SidebarDetailRow({ label, value }: { label: string; value: ReactNode }) {
   return (

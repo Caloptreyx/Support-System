@@ -14,7 +14,12 @@ export const isRichTextEmpty = (value: string | null | undefined): boolean => {
   }
 
   if (typeof window === 'undefined') {
-    return value.replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ').trim().length === 0;
+    return (
+      value
+        .replace(/<[^>]+>/g, '')
+        .replace(/&nbsp;/g, ' ')
+        .trim().length === 0
+    );
   }
 
   const container = window.document.createElement('div');

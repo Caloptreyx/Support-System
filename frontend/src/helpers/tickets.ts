@@ -6,13 +6,7 @@ import type {
   TicketServerOption,
 } from '../types/index.ts';
 
-export type TicketStatusValue =
-  | 'open'
-  | 'pending'
-  | 'answered'
-  | 'waiting_on_client'
-  | 'waiting_on_staff'
-  | 'closed';
+export type TicketStatusValue = 'open' | 'pending' | 'answered' | 'waiting_on_client' | 'waiting_on_staff' | 'closed';
 
 export type TicketPriorityValue = 'low' | 'normal' | 'high' | 'urgent';
 
@@ -32,7 +26,7 @@ export const ticketPriorityOptions: Array<{ value: TicketPriorityValue; label: s
   { value: 'urgent', label: 'Urgent' },
 ];
 
-export const emptyPaginated = <T,>(): Paginated<T> => ({
+export const emptyPaginated = <T>(): Paginated<T> => ({
   total: 0,
   perPage: 20,
   page: 1,
@@ -125,7 +119,9 @@ export const describeLinkedServer = (server: TicketLinkedServer): string => {
   return identifier ? `${primaryName} (#${identifier})${deletedSuffix}` : `${primaryName}${deletedSuffix}`;
 };
 
-export const buildUserDisplayName = (user: { nameFirst: string; nameLast: string; username: string } | null | undefined): string => {
+export const buildUserDisplayName = (
+  user: { nameFirst: string; nameLast: string; username: string } | null | undefined,
+): string => {
   if (!user) {
     return 'Unassigned';
   }
@@ -161,7 +157,9 @@ export const humanizeAuditEvent = (event: TicketAuditEvent): string => {
         ? `Priority changed to ${humanizeTicketPriority(asString(payload.priority))}`
         : 'Priority cleared';
     case 'category_changed':
-      return asString(payload.categoryName) ? `Category changed to ${asString(payload.categoryName)}` : 'Category cleared';
+      return asString(payload.categoryName)
+        ? `Category changed to ${asString(payload.categoryName)}`
+        : 'Category cleared';
     case 'ticket_deleted':
       return 'Ticket soft-deleted';
     case 'linked_server_deleted':
@@ -171,7 +169,9 @@ export const humanizeAuditEvent = (event: TicketAuditEvent): string => {
   }
 };
 
-export const extractClientMetadata = (metadata: Record<string, unknown> | null | undefined): Record<string, unknown> => {
+export const extractClientMetadata = (
+  metadata: Record<string, unknown> | null | undefined,
+): Record<string, unknown> => {
   if (!metadata || typeof metadata !== 'object') {
     return {};
   }
@@ -180,7 +180,8 @@ export const extractClientMetadata = (metadata: Record<string, unknown> | null |
   return value && typeof value === 'object' && !Array.isArray(value) ? (value as Record<string, unknown>) : {};
 };
 
-export const hasEnabledCategories = (categories: TicketCategory[]): boolean => categories.some((category) => category.enabled);
+export const hasEnabledCategories = (categories: TicketCategory[]): boolean =>
+  categories.some((category) => category.enabled);
 
 const humanizeSnakeCase = (value: string | null | undefined): string => {
   if (!value) {

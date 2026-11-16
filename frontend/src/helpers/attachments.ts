@@ -15,17 +15,9 @@ export const SUPPORT_ALLOWED_IMAGE_TYPES = new Set([
   'image/avif',
 ]);
 
-export const SUPPORT_ALLOWED_VIDEO_TYPES = new Set([
-  'video/mp4',
-  'video/webm',
-  'video/ogg',
-  'video/quicktime',
-]);
+export const SUPPORT_ALLOWED_VIDEO_TYPES = new Set(['video/mp4', 'video/webm', 'video/ogg', 'video/quicktime']);
 
-export const SUPPORT_ATTACHMENT_ACCEPT = [
-  ...SUPPORT_ALLOWED_IMAGE_TYPES,
-  ...SUPPORT_ALLOWED_VIDEO_TYPES,
-].join(',');
+export const SUPPORT_ATTACHMENT_ACCEPT = [...SUPPORT_ALLOWED_IMAGE_TYPES, ...SUPPORT_ALLOWED_VIDEO_TYPES].join(',');
 
 export const classifySupportAttachmentType = (contentType: string): 'image' | 'video' | null => {
   if (SUPPORT_ALLOWED_IMAGE_TYPES.has(contentType)) {
@@ -74,9 +66,7 @@ export const validateSupportAttachmentSelection = (
 
     const duplicate = nextFiles.some(
       (existing) =>
-        existing.name === file.name &&
-        existing.size === file.size &&
-        existing.lastModified === file.lastModified,
+        existing.name === file.name && existing.size === file.size && existing.lastModified === file.lastModified,
     );
 
     if (!duplicate) {
