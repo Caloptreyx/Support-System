@@ -1,0 +1,22 @@
+# Builds this extension inside a real Calagopus panel checkout on every push.
+# The steps live in Caloptreyx/.github (.github/workflows/extension-check.yml).
+name: Check
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: check-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    # A branch in this repo is already checked by its push; pull requests only add forks.
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name != github.repository
+    uses: Caloptreyx/.github/.github/workflows/extension-check.yml@main
