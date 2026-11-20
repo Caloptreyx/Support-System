@@ -1,0 +1,26 @@
+# Attaches a real `panel-rs extensions export` of the release tag to the release as <id>.c7s.zip.
+# The steps live in Caloptreyx/.github (.github/workflows/extension-release.yml).
+# Rebuild an existing release with "Run workflow" and its tag.
+name: Release
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Release tag to export and upload to, e.g. v1.2.3
+        required: true
+
+concurrency:
+  group: release-${{ github.event.release.tag_name || inputs.tag }}
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  export:
+    uses: Caloptreyx/.github/.github/workflows/extension-release.yml@main
+    with:
+      tag: ${{ github.event.release.tag_name || inputs.tag }}
